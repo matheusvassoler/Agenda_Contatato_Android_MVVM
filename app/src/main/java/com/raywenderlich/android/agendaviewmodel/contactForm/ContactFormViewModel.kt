@@ -1,5 +1,7 @@
 package com.raywenderlich.android.agendaviewmodel.contactForm
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.raywenderlich.android.agendaviewmodel.model.Contact
 import com.raywenderlich.android.agendaviewmodel.repository.ContactRepository
@@ -11,10 +13,21 @@ class ContactFormViewModel: ViewModel() {
     private var email: String     = ""
     private var contactRepository = ContactRepository()
     private var contact           = Contact()
+    var contactExist: MutableLiveData<Contact> = MutableLiveData()
 
-    fun saveContact() {
+    fun saveContact(id: Int) {
         setContact()
-        contactRepository.addContact(contact)
+        if(id > 0) {
+            contact.setId(id)
+            contactRepository.editContact(contact)
+        } else {
+            contactRepository.addContact(contact)
+        }
+
+    }
+
+    fun searchContactById(id: Int) {
+        contactExist.value = contactRepository.searchContactById(id)
     }
 
     private fun setContact() {

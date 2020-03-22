@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.core.text.set
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.raywenderlich.android.agendaviewmodel.R
@@ -18,21 +21,37 @@ class ContactFormActivity : AppCompatActivity() {
     private lateinit var email: String
     private lateinit var viewModel: ContactFormViewModel
 
+    private val userId by lazy {
+        intent.getIntExtra("id", 0)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact_form)
 
         viewModel = ViewModelProviders.of(this).get(ContactFormViewModel::class.java)
+        fillFields()
+        viewModel.searchContactById(userId)
 
         activity_contact_form_btnAddContact.setOnClickListener {
             onClickAddContact()
         }
     }
 
+    private fun fillFields() {
+        viewModel.contactExist.observe(this, Observer {
+            if (it != null) {
+                activity_contact_form_editName.setText(it.getName())
+                activity_contact_form_editPhone.setText(it.getPhone())
+                activity_contact_form_editEmail.setText(it.getEmail())
+            }
+        })
+    }
+
     fun onClickAddContact() {
         getDataFromEditText()
         setDataToViewModel()
-        viewModel.saveContact()
+        viewModel.saveContact(userId)
         setResult(Activity.RESULT_OK)
         finish()
     }

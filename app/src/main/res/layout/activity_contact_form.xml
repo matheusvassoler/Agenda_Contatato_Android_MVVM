@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textCapWords"
-        android:text="Name" />
+        android:hint="Name" />
 
     <EditText
         android:id="@+id/activity_contact_form_editPhone"
@@ -23,7 +23,7 @@
         android:ems="10"
         android:layout_marginTop="15dp"
         android:inputType="phone"
-        android:text="Phone" />
+        android:hint="Phone" />
 
     <EditText
         android:id="@+id/activity_contact_form_editEmail"
@@ -32,7 +32,7 @@
         android:ems="10"
         android:layout_marginTop="15dp"
         android:inputType="textEmailAddress"
-        android:text="Email" />
+        android:hint="Email" />
 
     <Button
         android:id="@+id/activity_contact_form_btnAddContact"

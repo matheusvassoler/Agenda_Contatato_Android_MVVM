@@ -29,21 +29,29 @@ class AgendaListActivity : AppCompatActivity() {
             agenda_list.apply {
                 layoutManager = LinearLayoutManager(this@AgendaListActivity, RecyclerView.VERTICAL, false)
                 setHasFixedSize(true)
-                adapter = AgendaListAdapter(it)
+                adapter = AgendaListAdapter(it) {
+                    goToNextActivity(it.getId())
+                }
             }
         }
 
         viewModel.contactList.observe(this, observer)
 
         activity_agenda_list_fabAddContact.setOnClickListener {
-            onClickAddContact()
+            goToNextActivity()
         }
 
         viewModel.getContacts()
     }
 
-    fun onClickAddContact() {
+    fun goToNextActivity() {
         startActivityForResult(Intent(this, ContactFormActivity::class.java),1)
+    }
+
+    fun goToNextActivity(id: Int) {
+        intent = Intent(this, ContactFormActivity::class.java)
+        intent.putExtra("id", id)
+        startActivityForResult(intent,1)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

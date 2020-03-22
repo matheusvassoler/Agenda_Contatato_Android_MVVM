@@ -1,5 +1,6 @@
 package com.raywenderlich.android.agendaviewmodel.contactForm
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -32,6 +33,7 @@ class ContactFormActivity : AppCompatActivity() {
         getDataFromEditText()
         setDataToViewModel()
         viewModel.saveContact()
+        setResult(Activity.RESULT_OK)
         finish()
     }
 

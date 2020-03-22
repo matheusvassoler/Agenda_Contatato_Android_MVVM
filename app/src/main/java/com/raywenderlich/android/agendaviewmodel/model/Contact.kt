@@ -16,4 +16,8 @@ class Contact {
     fun setEmail(email: String) {
         this.email = email
     }
+
+    fun getName(): String {
+        return name
+    }
 }

@@ -1,17 +1,16 @@
 package com.raywenderlich.android.agendaviewmodel.contactForm
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.raywenderlich.android.agendaviewmodel.model.Contact
 import com.raywenderlich.android.agendaviewmodel.repository.ContactRepository
 
 class ContactFormViewModel: ViewModel() {
 
-    private var name: MutableLiveData<String>  = MutableLiveData()
-    private var phone: MutableLiveData<String> = MutableLiveData()
-    private var email: MutableLiveData<String> = MutableLiveData()
-    private var contactRepository              = ContactRepository()
-    private var contact                        = Contact()
+    private var name: String      = ""
+    private var phone: String     = ""
+    private var email: String     = ""
+    private var contactRepository = ContactRepository()
+    private var contact           = Contact()
 
     fun saveContact() {
         setContact()
@@ -19,20 +18,20 @@ class ContactFormViewModel: ViewModel() {
     }
 
     private fun setContact() {
-        contact.setName(name.value!!)
-        contact.setPhone(phone.value!!)
-        contact.setEmail(email.value!!)
+        contact.setName(name)
+        contact.setPhone(phone)
+        contact.setEmail(email)
     }
 
     fun setName(name: String) {
-        this.name.value = name
+        this.name = name
     }
 
     fun setPhone(phone: String) {
-        this.phone.value = phone
+        this.phone = phone
     }
 
     fun setEmail(email: String) {
-        this.email.value = email
+        this.email = email
     }
 }

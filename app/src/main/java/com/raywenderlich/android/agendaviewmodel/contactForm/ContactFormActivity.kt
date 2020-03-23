@@ -7,11 +7,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.text.set
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.raywenderlich.android.agendaviewmodel.R
 import com.raywenderlich.android.agendaviewmodel.agendaList.AgendaListActivity
+import com.raywenderlich.android.agendaviewmodel.databinding.ActivityContactFormBinding
+import com.raywenderlich.android.agendaviewmodel.model.Contact
 import kotlinx.android.synthetic.main.activity_contact_form.*
 
 class ContactFormActivity : AppCompatActivity() {
@@ -20,6 +23,7 @@ class ContactFormActivity : AppCompatActivity() {
     private lateinit var phone: String
     private lateinit var email: String
     private lateinit var viewModel: ContactFormViewModel
+    private lateinit var binding: ActivityContactFormBinding
 
     private val userId by lazy {
         intent.getIntExtra("id", 0)
@@ -28,6 +32,8 @@ class ContactFormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact_form)
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_contact_form)
 
         viewModel = ViewModelProviders.of(this).get(ContactFormViewModel::class.java)
         fillFields()
@@ -41,9 +47,7 @@ class ContactFormActivity : AppCompatActivity() {
     private fun fillFields() {
         viewModel.contactExist.observe(this, Observer {
             if (it != null) {
-                activity_contact_form_editName.setText(it.getName())
-                activity_contact_form_editPhone.setText(it.getPhone())
-                activity_contact_form_editEmail.setText(it.getEmail())
+                binding.item = it
             }
         })
     }

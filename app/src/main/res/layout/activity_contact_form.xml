@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="item"
+            type="com.raywenderlich.android.agendaviewmodel.model.Contact" />
+        <variable
+            name="a"
+            type="com.raywenderlich.android.agendaviewmodel.contactForm.ContactFormActivity" />
+    </data>
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
@@ -14,6 +23,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textCapWords"
+        android:text="@{item.name}"
         android:hint="Name" />
 
     <EditText
@@ -23,6 +33,7 @@
         android:ems="10"
         android:layout_marginTop="15dp"
         android:inputType="phone"
+        android:text="@{item.phone}"
         android:hint="Phone" />
 
     <EditText
@@ -32,6 +43,7 @@
         android:ems="10"
         android:layout_marginTop="15dp"
         android:inputType="textEmailAddress"
+        android:text="@{item.email}"
         android:hint="Email" />
 
     <Button
@@ -42,3 +54,4 @@
         android:layout_marginTop="20dp"/>
 
 </LinearLayout>
+</layout>

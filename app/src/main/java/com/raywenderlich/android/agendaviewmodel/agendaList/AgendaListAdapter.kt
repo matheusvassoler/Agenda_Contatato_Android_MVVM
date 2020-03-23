@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.raywenderlich.android.agendaviewmodel.R
+import com.raywenderlich.android.agendaviewmodel.databinding.ContactListBinding
 import com.raywenderlich.android.agendaviewmodel.model.Contact
 import kotlinx.android.synthetic.main.contact_list.view.*
 
@@ -15,8 +16,9 @@ class AgendaListAdapter(var contacts: List<Contact>, val onItemClickListener: ((
         parent: ViewGroup,
         viewType: Int
     ): AgendaListAdapter.ViewHolder {
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.contact_list, parent, false)
-        return ViewHolder(view, onItemClickListener)
+        var inflater = LayoutInflater.from(parent.context)
+        val binding = ContactListBinding.inflate(inflater)
+        return ViewHolder(binding, onItemClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -28,13 +30,12 @@ class AgendaListAdapter(var contacts: List<Contact>, val onItemClickListener: ((
         holder.bindView(contact)
     }
 
-    class ViewHolder(itemView: View, val onItemClickListener: ((contact: Contact) -> Unit)): RecyclerView.ViewHolder(itemView) {
-        var name = itemView.textView
-
+    class ViewHolder(val view: ContactListBinding, val onItemClickListener: ((contact: Contact) -> Unit)): RecyclerView.ViewHolder(view.root) {
         fun bindView(contact: Contact) {
-            name.text = contact.getName()
+            view.item = contact
+            view.executePendingBindings()
 
-            name.setOnClickListener {
+            itemView.setOnClickListener {
                 onItemClickListener(contact)
             }
         }

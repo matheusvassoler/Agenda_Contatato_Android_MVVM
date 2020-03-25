@@ -20,23 +20,31 @@ class AgendaListActivityTest {
     val activityRule = ActivityScenarioRule(AgendaListActivity::class.java)
 
     @Test
-    fun test_backPressToAgendaListActivity() {
-        onView(withId(R.id.activity_agenda_list_fabAddContact))
-            .perform(click())
+    fun verifyIfAgendaListIsVisible() {
+        val agendaListRobot = AgendaListRobot()
 
-        onView(withId(R.id.activity_contact_form))
-            .check(matches(isDisplayed()))
-
-        pressBack()
-
-        onView(withId(R.id.activity_agenda_list))
-            .check(matches(isDisplayed()))
+        agendaListRobot.checkViewIsVisible(R.id.activity_agenda_list)
     }
 
     @Test
-    fun test_navContactFormActivity() {
-        onView(withId(R.id.activity_agenda_list_fabAddContact)).perform(click())
+    fun verifyIfFabIsVisible() {
+        val agendaListRobot = AgendaListRobot()
 
-        onView(withId(R.id.activity_contact_form)).check(matches(isDisplayed()))
+        agendaListRobot.checkViewIsVisible(R.id.activity_agenda_list_fabAddContact)
+    }
+
+    @Test
+    fun verifiyFabClick() {
+        val agendaListRobot = AgendaListRobot()
+
+        agendaListRobot.clickOnView(R.id.activity_agenda_list_fabAddContact)
+    }
+
+    @Test
+    fun verifyNextScreenIsVisible() {
+        val agendaListRobot = AgendaListRobot()
+
+        agendaListRobot.clickOnView(R.id.activity_agenda_list_fabAddContact)
+        agendaListRobot.checkViewIsVisible(R.id.activity_contact_form)
     }
 }
